@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<!-- HTML structure with document type and language -->
+<html lang="en">
+
+<head>
+    <!-- Metadata and viewport settings -->
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arthur's Portfolio</title>
+</head>
+
+<body>
+
+    <!-- Dynamic welcome message -->
+    <h1 id="welcome-message"></h1>
+
+    <!-- Nav Menu linking 3 different section -->
+    <nav>
+        <ul>
+            <li><a href="#about">About</a></li>
+            <li><a href="#projects">Projects</a></li>
+            <li><a href="#contact">Contact</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- 3a. About section  -->
+        <section id="about">
+            <h2>About</h2>
+            <p>Hello! I am a Software development student learning JavaScript! 
+        </section>
+
+        <!-- 3b. Projects section with image links to GitHub projects -->
+        <section id="projects">
+            <h2>Projects</h2>
+            <!-- Image links pointing to placeholder project repositories -->
+            <a href="https://github.com/ArtKem2260/math-quiz-engine">
+                <img src="placeholder_math.png" alt="Math Quiz Engine" width="200">
+            </a>
+            <a href="https://github.com/ArtKem2260/seat-reservation-system">
+                <img src="placeholder_seat.png" alt="Seat Reservation System" width="200">
+            </a>
+            <a href="https://github.com/ArtKem2260/automated-data-charts">
+                <img src="placeholder_charts.png" alt="Automated Data Charts" width="200">
+            </a>
+        </section>
+
+        <!-- 3c. Contact section with an email form -->
+        <section id="contact">
+            <h2>Contact</h2>
+            <form action="#" method="POST">
+                <!-- Form fields for sender details and message -->
+                <label for="senderName">Sender Name:</label><br>
+                <input type="text" id="senderName" name="senderName" required><br><br>
+
+                <label for="emailAddress">Email Address:</label><br>
+                <input type="email" id="emailAddress" name="emailAddress" required><br><br>
+
+                <label for="subject">Subject:</label><br>
+                <input type="text" id="subject" name="subject" required><br><br>
+
+                <label for="message">Message:</label><br>
+                <textarea id="message" name="message" rows="4" required></textarea><br><br>
+
+                <!-- Submit button -->
+                <button type="submit">Submit</button>
+            </form>
+        </section>
+    </main>
+
+    <!-- User Interaction script block -->
+    <script>
+        // Prompt the user for their name and store it in a variable
+        let userName = prompt("Please enter your name:");
+
+        // Fallback if the user cancels the prompt
+        if (!userName) {
+            userName = "Guest";
+        }
+
+        // Dynamically update the message at the top of the page
+        document.getElementById("welcome-message").textContent = "Welcome, " + userName + "!";
+    </script>
+</body>
+
+</html>
