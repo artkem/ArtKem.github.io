@@ -7,10 +7,30 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Arthur's Portfolio</title>
+    <style>
+        /* Dark Mode styling */
+        .dark-mode {
+            background-color: #121212;
+            color: #ffffff;
+        }
+    
+        /* Styling to clearly distinguish the Featured Content divs */
+        .resource-box {
+            border: 2px solid #555;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 
 <body>
-
+    <!-- Dark Mode Slider/Checkbox -->
+    <div style="padding: 10px;">
+        <label>
+            <input type="checkbox" id="darkModeToggle"> <strong>Dark Mode</strong>
+        </label>
+    </div>
     <!-- Dynamic welcome message -->
     <h1 id="welcome-message"></h1>
 
@@ -29,13 +49,29 @@
             <h2>About</h2>
             <p>Hello! I am a Software development student learning JavaScript! 
         </section>
-
+        <!-- Featured Content Section -->
+        <section id="featured-content">
+            <h2>Featured Content</h2>
+        
+            <div id="university-resources" class="resource-box">
+                <h3>University Resources</h3>
+                <a href="https://www.ecpi.edu/programs/software-development-bachelor-degree" target="_blank">ECPI Software
+                    Development Program</a>
+            </div>
+        
+            <div id="personal-projects" class="resource-box">
+                <h3>Personal Projects</h3>
+                <a href="https://github.com/ArtKem2260" target="_blank">
+                    <img src="placeholder_github.png" alt="My GitHub Profile" width="200">
+                </a>
+            </div>
+        </section>
         <!-- 3b. Projects section with image links to GitHub projects -->
         <section id="projects">
             <h2>Projects</h2>
             <!-- Image links pointing to placeholder project repositories -->
-            <a href="https://github.com/ArtKem2260/math-quiz-engine">
-                <img src="placeholder_math.png" alt="Math Quiz Engine" width="200">
+            <a href="https://github.com/artkem/ArtKem-SDC205/blob/main/finalExam.py">
+                
             </a>
             <a href="https://github.com/ArtKem2260/seat-reservation-system">
                 <img src="placeholder_seat.png" alt="Seat Reservation System" width="200">
@@ -80,6 +116,54 @@
 
         // Dynamically update the message at the top of the page
         document.getElementById("welcome-message").textContent = "Welcome, " + userName + "!";
+        // --- 1. Implement a Loop (Skills List in About Section) ---
+            const skills = ["HTML", "C", "Python", "Git", "GitHub"];
+            const aboutSection = document.getElementById("about");
+            const skillsList = document.createElement("ul");
+
+            skills.forEach(skill => {
+                const li = document.createElement("li");
+                li.textContent = skill;
+                skillsList.appendChild(li);
+            });
+            aboutSection.appendChild(skillsList);
+
+            // --- 2. Featured Content Visibility Logic ---
+            const projectLinks = document.querySelectorAll("#projects a");
+            const uniResourcesDiv = document.getElementById("university-resources");
+            const personalProjectsDiv = document.getElementById("personal-projects");
+
+            if (projectLinks.length < 3) {
+                uniResourcesDiv.style.display = "block";
+                personalProjectsDiv.style.display = "block";
+            } else {
+                personalProjectsDiv.style.display = "block";
+                uniResourcesDiv.style.display = "none";
+            }
+
+            // --- 3. Dark Mode Slider ---
+            const darkModeToggle = document.getElementById("darkModeToggle");
+            darkModeToggle.addEventListener("change", function () {
+                // Toggles the .dark-mode class on the body element
+                document.body.classList.toggle("dark-mode");
+            });
+
+            // --- 4. Form Submit Interactivity ---
+            const submitButton = document.querySelector('button[type="submit"]');
+            submitButton.addEventListener("click", function (event) {
+                // Prevent the page from refreshing
+                event.preventDefault();
+
+                // Get the user's name from the form input
+                const senderName = document.getElementById("senderName").value;
+
+                // Display confirmation alert
+                if (senderName) {
+                    alert(`Thank you, ${senderName}, your message has been sent!`);
+                } else {
+                    alert("Please enter your name before submitting.");
+                }
+            });
     </script>
 </body>
 
