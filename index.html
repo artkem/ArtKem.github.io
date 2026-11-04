@@ -21,10 +21,46 @@
             margin: 10px 0;
             border-radius: 5px;
         }
+        /* Styling for the dark, slightly transparent background overlay */
+        #welcome-modal-overlay {
+            /* Fixed position keeps it over the entire screen even if you scroll */
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* Black background with 70% opacity for the transparency effect */
+            background-color: rgba(0, 0, 0, 0.7);
+            /* z-index ensures the modal sits on top of all other page elements */
+            z-index: 1000;
+            /* Flexbox centers the modal box vertically and horizontally */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Styling for the actual message box in the center */
+        #welcome-modal-box {
+            background-color: white;
+            /* Force the text inside to be dark so it is readable */
+            color: #121212; 
+            padding: 30px;
+            border-radius: 8px;
+            text-align: center;
+        }
     </style>
 </head>
 
 <body>
+    <!-- Custom Welcome Modal Container -->
+    <div id="welcome-modal-overlay">
+        <div id="welcome-modal-box">
+            <h2>Welcome!</h2>
+            <p>This page is a work in progress.</p>
+            <!-- Button used by JavaScript to dismiss the modal -->
+            <button id="close-modal-button">Close</button>
+        </div>
+    </div>
     <!-- Dark Mode Slider/Checkbox -->
     <div style="padding: 10px;">
         <label>
@@ -98,24 +134,24 @@
                 <label for="message">Message:</label><br>
                 <textarea id="message" name="message" rows="4" required></textarea><br><br>
 
-                <!-- Submit button -->
-                <button type="submit">Submit</button>
+                <!-- Submit button with a hover tooltip -->
+                <button type="submit" title="Click to send your message!">Submit</button>
             </form>
         </section>
     </main>
 
     <!-- User Interaction script block -->
     <script>
-        // Prompt the user for their name and store it in a variable
-        let userName = prompt("Please enter your name:");
+        // --- 1. Custom Welcome Modal Logic ---
+            // Find the modal background and the close button in the HTML by their IDs
+            const modalOverlay = document.getElementById("welcome-modal-overlay");
+            const closeModalButton = document.getElementById("close-modal-button");
 
-        // Fallback if the user cancels the prompt
-        if (!userName) {
-            userName = "Guest";
-        }
-
-        // Dynamically update the message at the top of the page
-        document.getElementById("welcome-message").textContent = "Welcome, " + userName + "!";
+            // Tell the close button to listen for a mouse "click"
+            closeModalButton.addEventListener("click", function () {
+                // When clicked, hide the entire modal overlay by changing its display style to "none"
+                modalOverlay.style.display = "none";
+            });
         // --- 1. Implement a Loop (Skills List in About Section) ---
             const skills = ["HTML", "C", "Python", "Git", "GitHub"];
             const aboutSection = document.getElementById("about");
@@ -141,12 +177,31 @@
                 uniResourcesDiv.style.display = "none";
             }
 
-            // --- 3. Dark Mode Slider ---
-            const darkModeToggle = document.getElementById("darkModeToggle");
-            darkModeToggle.addEventListener("change", function () {
-                // Toggles the .dark-mode class on the body element
-                document.body.classList.toggle("dark-mode");
-            });
+            // --- 3. Persistent Dark Mode Slider ---
+                const darkModeToggle = document.getElementById("darkModeToggle");
+
+                // On page load, check the browser's memory (localStorage) to see if Dark Mode was saved as "enabled"
+                if (localStorage.getItem("darkModePreference") === "enabled") {
+                    // If it was enabled previously, turn on the dark mode styling right away
+                    document.body.classList.add("dark-mode");
+                    // Check the slider/checkbox so it matches the dark screen
+                    darkModeToggle.checked = true;
+                }
+
+                // Listen for whenever the user clicks the dark mode checkbox
+                darkModeToggle.addEventListener("change", function () {
+                    // Toggle the dark mode styling on or off
+                    document.body.classList.toggle("dark-mode");
+
+                    // Check if the page is currently in dark mode after the toggle
+                    if (document.body.classList.contains("dark-mode")) {
+                        // If it is dark, save "enabled" to the browser's memory
+                        localStorage.setItem("darkModePreference", "enabled");
+                    } else {
+                        // If it is light, save "disabled" to the browser's memory
+                        localStorage.setItem("darkModePreference", "disabled");
+                    }
+                });
             
                 //Dynamically Add a New Section or Message Using JavaScript
                 // 1. Find the existing "Projects" section using its ID so we know where to put our new text
